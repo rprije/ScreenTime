@@ -18,6 +18,6 @@ public class SingleDigitSubtraction extends Subtraction {
 
     @Override
     Integer getValue () {
-        return 2;
+        return 5;
     }
 }

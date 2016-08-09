@@ -18,6 +18,6 @@ public class SingleDigitMultiplication extends Multiplication {
 
     @Override
     Integer getValue() {
-        return 5;
+        return 10;
     }
 }
