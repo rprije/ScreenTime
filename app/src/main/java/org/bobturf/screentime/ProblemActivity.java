@@ -65,14 +65,20 @@ public class ProblemActivity extends AppCompatActivity {
 
         EditText answerView = (EditText)findViewById(R.id.answer_entry);
 
-        if (problem.checkSolution(answerView.getText().toString())) {
-            ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
-            app.getState().earnTokens(problem.getValue());
-            nextProblem();
-        } else {
-            TextView tryAgain = (TextView)findViewById(R.id.try_again);
-            tryAgain.setText(R.string.try_again);
-            answerView.getText().clear();
+
+        try {
+
+            if (problem.checkSolution(answerView.getText().toString())) {
+                ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
+                app.getState().earnTokens(problem.getValue());
+                nextProblem();
+            } else {
+                TextView tryAgain = (TextView) findViewById(R.id.try_again);
+                tryAgain.setText(R.string.try_again);
+                answerView.getText().clear();
+            }
+        } catch (BadUserInputException buie) {
+
         }
     }
 

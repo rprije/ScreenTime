@@ -12,9 +12,21 @@ public abstract class Problem {
 
     abstract String getProblemName();
 
+    protected Integer parseIntegerSolution(String solution) throws BadUserInputException {
+        Integer parsedInt;
+        try {
+            parsedInt = Integer.parseInt(solution);
+        }
+        catch (NumberFormatException nfe) {
+            throw new BadUserInputException();
+        }
+
+        return parsedInt;
+    }
+
     abstract View represent (Context context);
 
-    abstract boolean checkSolution (String solution) throws IllegalArgumentException;
+    abstract boolean checkSolution (String solution) throws BadUserInputException;
 
     abstract Integer getValue();
 

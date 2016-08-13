@@ -18,8 +18,8 @@ public abstract class Subtraction extends Problem {
     }
 
     @Override
-    boolean checkSolution(String solution) throws IllegalArgumentException {
-        return Integer.parseInt(solution) == xVal - yVal;
+    boolean checkSolution(String solution) throws BadUserInputException {
+        return parseIntegerSolution(solution) == xVal - yVal;
     }
 
     @Override
