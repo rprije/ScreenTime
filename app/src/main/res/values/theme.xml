@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="ScreenTime" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="LargeText">26sp</item>
+        <item name="MediumText">22sp</item>
+        <item name="SmallText">18sp</item>
+
+        <item name="android:textSize">?MediumText</item>
+
+    </style>
+
+</resources>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScreenTime.WindowLayout"
+    tools:context="org.bobturf.screentime.ProblemActivity">
+    <TextView
+        style="@style/ScreenTime.FillWidth.Error"
+        android:id="@+id/try_again" />
+    <TextView
+        style="@style/ScreenTime.FillWidth"
+        android:id="@+id/problem_value" />
+    <FrameLayout
+        style="@style/ScreenTime.FillWidth"
+        android:id="@+id/problem_frame" />
+    <EditText
+        style="@style/ScreenTime.NumberEntry"
+        android:hint="@string/answer_entry_hint"
+        android:id="@+id/answer_entry" />
+    <LinearLayout
+        style="@style/ScreenTime.FillWidth">
+        <Button
+            style="@style/ScreenTime.Button"
+            android:text="@string/answer_button"
+            android:onClick="checkAnswer" />
+        <Button
+            style="@style/ScreenTime.Button"
+            android:text="@string/skip"
+            android:onClick="skipProblem" />
+    </LinearLayout>
+</LinearLayout>
