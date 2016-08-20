@@ -12,10 +12,10 @@ import org.bobturf.screentime.Util;
  */
 public abstract class Addition extends Problem {
 
-    protected Integer xVal;
-    protected Integer yVal;
+    private Integer xVal;
+    private Integer yVal;
 
-    protected void initialise(Integer lowerBound, Integer upperBound) {
+    void initialise(Integer lowerBound, Integer upperBound) {
         xVal = Util.randInt(lowerBound, upperBound);
         yVal = Util.randInt(lowerBound, upperBound);
     }

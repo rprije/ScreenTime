@@ -12,7 +12,7 @@ public abstract class Problem {
 
     public abstract String getProblemName();
 
-    protected Integer parseIntegerSolution(String solution) throws BadUserInput {
+    Integer parseIntegerSolution(String solution) throws BadUserInput {
         Integer parsedInt;
         try {
             parsedInt = Integer.parseInt(solution);

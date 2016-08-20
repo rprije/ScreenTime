@@ -1,10 +1,10 @@
 package org.bobturf.screentime;
 
 import android.support.annotation.NonNull;
-import android.util.Log;
 
 import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
 import org.bobturf.screentime.Exception.AlreadyHaveProblems;
+import org.bobturf.screentime.Exception.ShouldBeImpossible;
 import org.bobturf.screentime.Problem.*;
 
 import java.util.LinkedList;
@@ -15,29 +15,29 @@ import java.util.LinkedList;
 
 /**
  * Created by rprije on 8/7/16.
+ *
+ * State accessible throughout the app
  */
-public class State {
+class State {
     private Integer tokensEarned = 0;
-    @NonNull private LinkedList<Problem> problemQueue = new LinkedList<Problem>();
-    private Integer problemSetValue = 100;
+    @NonNull private LinkedList<Problem> problemQueue = new LinkedList<>();
+    private final Integer problemSetValue = 100;
 
-    public final static String STATE = "org.bobturf.ScreenTime.STATE";
-
-    public State() {
+    State() {
 
     }
 
-    public void earnTokens (Integer tokens) {
+    private void earnTokens (Integer tokens) {
         tokensEarned += tokens;
     }
 
-    public Integer getTokensEarned () {
+    Integer getTokensEarned () {
         return tokensEarned;
     }
 
-    public void reset () {
+    void reset () {
         tokensEarned = 0;
-        problemQueue = new LinkedList<Problem>();
+        problemQueue = new LinkedList<>();
     }
 
     private Problem generateProblem() {
@@ -51,11 +51,10 @@ public class State {
             case 2 :
                 return new SingleDigitMultiplication();
         }
-        assert false;
-        return null;
+        throw new ShouldBeImpossible();
     }
 
-    public Problem nextProblem() throws ProblemsAlreadyComplete {
+    Problem nextProblem() throws ProblemsAlreadyComplete {
         Problem p = problemQueue.peek();
         if (p == null) {
             throw new ProblemsAlreadyComplete();
@@ -65,35 +64,32 @@ public class State {
 
     }
 
-    public void skipProblem() {
+    void skipProblem() {
         Problem p = problemQueue.poll();
         if (p != null) {
             problemQueue.add(p);
         }
     }
 
-    public void problemCompleted() {
+    void problemCompleted() {
         Problem p = problemQueue.poll();
         if (p != null && numProblemsRemaining() == 0) {
             earnTokens(problemSetValue);
         }
     }
 
-    public void generateProblems (int numProblems) throws AlreadyHaveProblems {
+    void generateProblems (int numProblems) throws AlreadyHaveProblems {
         if (problemQueue.isEmpty()) {
             for (int i = numProblems; i > 0; i--) {
-
+                problemQueue.add(generateProblem());
             }
         } else {
             throw new AlreadyHaveProblems();
         }
     }
 
-    public int numProblemsRemaining () {
+    int numProblemsRemaining () {
         return problemQueue.size();
     }
 
-    public Integer getProblemSetValue() {
-        return problemSetValue;
-    }
 }

@@ -50,7 +50,7 @@ public class ProblemActivity extends AppCompatActivity {
         this.finish();
     }
 
-    public void checkAnswer(View view) {
+    public void checkAnswer(@SuppressWarnings("UnusedParameters") View view) {
 
         EditText answerView = (EditText)findViewById(R.id.answer_entry);
 
@@ -67,11 +67,11 @@ public class ProblemActivity extends AppCompatActivity {
                 answerView.getText().clear();
             }
         } catch (BadUserInput badUserInput) {
-
+            // TODO: report to the user
         }
     }
 
-    public void skipProblem(View view) {
+    public void skipProblem(@SuppressWarnings("UnusedParameters") View view) {
         ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
         State state = app.getState();
         state.skipProblem();

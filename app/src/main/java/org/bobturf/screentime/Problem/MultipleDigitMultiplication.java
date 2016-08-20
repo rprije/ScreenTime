@@ -5,9 +5,9 @@ package org.bobturf.screentime.Problem;
  *
  * A problem representing simple addition of two integers within bounds
  */
-public class MultipleDigitMultiplication extends Addition {
+public class MultipleDigitMultiplication extends Multiplication {
 
-    public MultipleDigitMultiplication() {
+    private MultipleDigitMultiplication() {
         initialise(0,115);
     }
 

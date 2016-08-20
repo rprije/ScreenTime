@@ -13,10 +13,6 @@ public class ScreenTimeApplication extends Application {
         state = new State();
     }
 
-    public void putState(State newState) {
-        state = newState;
-    }
-
     public State getState() {
         return state;
     }

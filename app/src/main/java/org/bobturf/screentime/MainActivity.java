@@ -8,10 +8,11 @@ import android.view.View;
 import android.widget.TextView;
 
 import org.bobturf.screentime.Exception.AlreadyHaveProblems;
+import org.bobturf.screentime.Exception.ShouldBeImpossible;
 
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener{
 
-    State state;
+    private State state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,12 +60,12 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         main_summary.setText(String.format("You currently have %d tokens", tokens));
     }
 
-    public void start(View view) {
+    public void start(@SuppressWarnings("UnusedParameters") View view) {
         if (state.numProblemsRemaining() <= 0) {
             try {
                 state.generateProblems(10);
             } catch (AlreadyHaveProblems alreadyHaveProblems) {
-                assert false;
+                throw new ShouldBeImpossible();
             }
         }
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         startActivity(intent);
     }
 
-    public void reset(View view) {
+    public void reset(@SuppressWarnings("UnusedParameters") View view) {
         ResetDialog dialog = new ResetDialog();
         dialog.show(getSupportFragmentManager(), "reset");
     }
