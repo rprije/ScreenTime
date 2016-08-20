@@ -1,4 +1,4 @@
-package org.bobturf.screentime;
+package org.bobturf.screentime.Problem;
 
 /**
  * Created by rprije on 8/1/16.
@@ -7,17 +7,13 @@ package org.bobturf.screentime;
  */
 public class MultipleDigitAddition extends Addition {
 
-    MultipleDigitAddition() {
+    public MultipleDigitAddition() {
         initialise(0,115);
     }
 
     @Override
-    String getProblemName() {
+    public String getProblemName() {
         return "Multiple Digit Addition";
     }
 
-    @Override
-    Integer getValue() {
-        return 10;
-    }
 }

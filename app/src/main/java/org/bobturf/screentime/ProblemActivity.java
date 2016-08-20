@@ -3,11 +3,14 @@ package org.bobturf.screentime;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
+
+import org.bobturf.screentime.Exception.BadUserInput;
+import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
+import org.bobturf.screentime.Problem.Problem;
 
 public class ProblemActivity extends AppCompatActivity {
 
@@ -18,40 +21,26 @@ public class ProblemActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
 
-        // The problem values need to be passed in.
-        // The problems themselves need to be generated somehow
-
-        Integer i = Util.randInt(0,3);
-
-        Log.d("MyApp", String.format("Generated Randem Integer: %d", i));
-
-        switch (i) {
-            case 0 :
-                Log.d("MyApp", "Case 0");
-                problem = new MultipleDigitAddition();
-                break;
-            case 1 :
-                Log.d("MyApp", "Case 1");
-                problem = new MultipleDigitSubtraction();
-                break;
-            case 2 :
-                Log.d("MyApp", "Case 2");
-                problem = new SingleDigitMultiplication();
-                break;
-        }
-
-        Integer problemVal1 = problem.getValue();
-        View problemDescription= problem.represent(this);
-
         ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
-        Integer currentTokens = app.getState().getTokensEarned();
-        String currentTokensText = String.format("You currently have %d tokens", currentTokens);
-        String valueText = String.format("This problem is worth %d points", (Integer)problemVal1);
-        TextView valueView = (TextView)findViewById(R.id.problem_value);
-        valueView.setText(currentTokensText + "\n" + valueText);
+        State state = app.getState();
 
-        FrameLayout problemFrame = (FrameLayout)findViewById(R.id.problem_frame);
-        problemFrame.addView(problemDescription);
+        try {
+            problem = state.nextProblem();
+
+            View problemDescription = problem.represent(this);
+
+            Integer numProblemsRemaining = state.numProblemsRemaining();
+
+            String remainingProblemsText = String.format("You have %d problems remaining", numProblemsRemaining);
+            TextView valueView = (TextView)findViewById(R.id.problem_status);
+            valueView.setText(remainingProblemsText);
+
+            FrameLayout problemFrame = (FrameLayout)findViewById(R.id.problem_frame);
+            problemFrame.addView(problemDescription);
+
+        } catch (ProblemsAlreadyComplete problemsAlreadyComplete) {
+            this.finish();
+        }
 
     }
 
@@ -70,19 +59,22 @@ public class ProblemActivity extends AppCompatActivity {
 
             if (problem.checkSolution(answerView.getText().toString())) {
                 ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
-                app.getState().earnTokens(problem.getValue());
+                app.getState().problemCompleted();
                 nextProblem();
             } else {
                 TextView tryAgain = (TextView) findViewById(R.id.try_again);
                 tryAgain.setText(R.string.try_again);
                 answerView.getText().clear();
             }
-        } catch (BadUserInputException buie) {
+        } catch (BadUserInput badUserInput) {
 
         }
     }
 
     public void skipProblem(View view) {
+        ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
+        State state = app.getState();
+        state.skipProblem();
         nextProblem();
     }
 }

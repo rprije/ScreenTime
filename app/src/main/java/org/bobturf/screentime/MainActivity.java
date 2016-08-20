@@ -7,12 +7,19 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
 
+import org.bobturf.screentime.Exception.AlreadyHaveProblems;
+
 public class MainActivity extends AppCompatActivity implements DialogInterface.OnDismissListener{
+
+    State state;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
+        state = app.getState();
 
         showTokens();
 
@@ -46,14 +53,21 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     private void showTokens () {
-        ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
-        Integer tokens = app.getState().getTokensEarned();
+        Integer tokens = state.getTokensEarned();
 
         TextView main_summary = (TextView)findViewById(R.id.main_summary);
         main_summary.setText(String.format("You currently have %d tokens", tokens));
     }
 
     public void start(View view) {
+        if (state.numProblemsRemaining() <= 0) {
+            try {
+                state.generateProblems(10);
+            } catch (AlreadyHaveProblems alreadyHaveProblems) {
+                assert false;
+            }
+        }
+
         Intent intent = new Intent(this, ProblemActivity.class);
         startActivity(intent);
     }
