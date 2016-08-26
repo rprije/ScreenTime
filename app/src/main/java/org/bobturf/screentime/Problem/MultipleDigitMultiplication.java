@@ -7,7 +7,7 @@ package org.bobturf.screentime.Problem;
  */
 public class MultipleDigitMultiplication extends Multiplication {
 
-    private MultipleDigitMultiplication() {
+    public MultipleDigitMultiplication() {
         initialise(0,115);
     }
 

@@ -4,9 +4,10 @@ import android.support.annotation.NonNull;
 
 import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
 import org.bobturf.screentime.Exception.AlreadyHaveProblems;
-import org.bobturf.screentime.Exception.ShouldBeImpossible;
 import org.bobturf.screentime.Problem.*;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.LinkedList;
 
 // TODO: Add NonNull stuff
@@ -20,10 +21,22 @@ import java.util.LinkedList;
  */
 class State {
     private Integer tokensEarned = 0;
+    private Constructor problemConstructors[];
+
     @NonNull private LinkedList<Problem> problemQueue = new LinkedList<>();
     private final Integer problemSetValue = 100;
 
     State() {
+        try {
+            Class emptyParams[] = new Class[] {};
+            problemConstructors = new Constructor[] {
+                    MultipleDigitAddition.class.getConstructor(emptyParams),
+                    MultipleDigitSubtraction.class.getConstructor(emptyParams),
+                    SingleDigitMultiplication.class.getConstructor(emptyParams)
+            };
+        } catch (NoSuchMethodException noSuchMethodException) {
+            // FIXME: Add logging or something here
+        }
 
     }
 
@@ -41,17 +54,21 @@ class State {
     }
 
     private Problem generateProblem() {
-        Integer i = Util.randInt(0,3);
+        Integer i = Util.randInt(0, problemConstructors.length);
 
-        switch (i) {
-            case 0 :
-                return new MultipleDigitAddition();
-            case 1 :
-                return new MultipleDigitSubtraction();
-            case 2 :
-                return new SingleDigitMultiplication();
+        try {
+            return (Problem)problemConstructors[i].newInstance();
+        } catch (InvocationTargetException invocationTargetException) {
+            // FIXME: Add logging or something here
+        } catch (InstantiationException instantiationException) {
+            // FIXME: Add logging or something here
+        } catch (IllegalAccessException illegalAccessException) {
+            // FIXME: Add logging or something here
         }
-        throw new ShouldBeImpossible();
+
+        // FIXME: Nulls suck. Do better.
+        return null;
+
     }
 
     Problem nextProblem() throws ProblemsAlreadyComplete {
