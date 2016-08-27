@@ -4,6 +4,7 @@ import android.support.annotation.NonNull;
 
 import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
 import org.bobturf.screentime.Exception.AlreadyHaveProblems;
+import org.bobturf.screentime.Exception.ShouldBeImpossible;
 import org.bobturf.screentime.Problem.*;
 
 import java.lang.reflect.Constructor;
@@ -35,7 +36,7 @@ class State {
                     SingleDigitMultiplication.class.getConstructor(emptyParams)
             };
         } catch (NoSuchMethodException noSuchMethodException) {
-            // FIXME: Add logging or something here
+            throw new ShouldBeImpossible();
         }
 
     }
@@ -58,17 +59,9 @@ class State {
 
         try {
             return (Problem)problemConstructors[i].newInstance();
-        } catch (InvocationTargetException invocationTargetException) {
-            // FIXME: Add logging or something here
-        } catch (InstantiationException instantiationException) {
-            // FIXME: Add logging or something here
-        } catch (IllegalAccessException illegalAccessException) {
-            // FIXME: Add logging or something here
+        } catch (InvocationTargetException|InstantiationException|IllegalAccessException ex) {
+            throw new ShouldBeImpossible();
         }
-
-        // FIXME: Nulls suck. Do better.
-        return null;
-
     }
 
     Problem nextProblem() throws ProblemsAlreadyComplete {
