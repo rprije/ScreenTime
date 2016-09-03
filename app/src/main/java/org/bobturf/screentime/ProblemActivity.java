@@ -11,32 +11,36 @@ import android.widget.TextView;
 import org.bobturf.screentime.Exception.BadUserInput;
 import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
 import org.bobturf.screentime.Problem.Problem;
+import org.w3c.dom.Text;
 
 public class ProblemActivity extends AppCompatActivity {
 
     private Problem problem;
+
+    private FrameLayout problemFrame;
+    private TextView valueView;
+    private TextView tryAgain;
+    private EditText answerView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem);
 
+        problemFrame = (FrameLayout)findViewById(R.id.problem_frame);
+        valueView = (TextView)findViewById(R.id.problem_status);
+        tryAgain = (TextView) findViewById(R.id.try_again);
+        answerView = (EditText)findViewById(R.id.answer_entry);
+
         ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
         State state = app.getState();
 
         try {
             problem = state.nextProblem();
-
-            View problemDescription = problem.represent(this);
-
             Integer numProblemsRemaining = state.numProblemsRemaining();
 
-            String remainingProblemsText = String.format("You have %d problems remaining", numProblemsRemaining);
-            TextView valueView = (TextView)findViewById(R.id.problem_status);
-            valueView.setText(remainingProblemsText);
-
-            FrameLayout problemFrame = (FrameLayout)findViewById(R.id.problem_frame);
-            problemFrame.addView(problemDescription);
+            valueView.setText(String.format("You have %d problems remaining", numProblemsRemaining));
+            problemFrame.addView(problem.represent(this));
 
         } catch (ProblemsAlreadyComplete problemsAlreadyComplete) {
             this.finish();
@@ -52,9 +56,6 @@ public class ProblemActivity extends AppCompatActivity {
 
     public void checkAnswer(@SuppressWarnings("UnusedParameters") View view) {
 
-        EditText answerView = (EditText)findViewById(R.id.answer_entry);
-
-
         try {
 
             if (problem.checkSolution(answerView.getText().toString())) {
@@ -62,7 +63,6 @@ public class ProblemActivity extends AppCompatActivity {
                 app.getState().problemCompleted();
                 nextProblem();
             } else {
-                TextView tryAgain = (TextView) findViewById(R.id.try_again);
                 tryAgain.setText(R.string.try_again);
                 answerView.getText().clear();
             }

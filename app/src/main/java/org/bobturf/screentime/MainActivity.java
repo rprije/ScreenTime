@@ -14,6 +14,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
     private State state;
 
+    private TextView main_summary;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +23,8 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
         state = app.getState();
+
+        main_summary = (TextView)findViewById(R.id.main_summary);
 
         showTokens();
 
@@ -56,7 +60,6 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     private void showTokens () {
         Integer tokens = state.getTokensEarned();
 
-        TextView main_summary = (TextView)findViewById(R.id.main_summary);
         main_summary.setText(String.format("You currently have %d tokens", tokens));
     }
 
