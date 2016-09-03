@@ -25,7 +25,7 @@ class State {
     private Constructor problemConstructors[];
 
     @NonNull private LinkedList<Problem> problemQueue = new LinkedList<>();
-    private final Integer problemSetValue = 100;
+    private final Integer problemSetValue = 1;
 
     State() {
         try {

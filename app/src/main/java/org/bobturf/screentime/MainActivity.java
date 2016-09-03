@@ -63,7 +63,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void start(@SuppressWarnings("UnusedParameters") View view) {
         if (state.numProblemsRemaining() <= 0) {
             try {
-                state.generateProblems(10);
+                state.generateProblems(30);
             } catch (AlreadyHaveProblems alreadyHaveProblems) {
                 throw new ShouldBeImpossible();
             }
