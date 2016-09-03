@@ -3,6 +3,7 @@ package org.bobturf.screentime;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -45,6 +46,14 @@ public class ProblemActivity extends AppCompatActivity {
         } catch (ProblemsAlreadyComplete problemsAlreadyComplete) {
             this.finish();
         }
+
+        answerView.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int i, KeyEvent keyEvent) {
+                checkAnswer(answerView);
+                return false;
+            }
+        });
 
     }
 
