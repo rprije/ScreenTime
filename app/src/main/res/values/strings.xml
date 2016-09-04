@@ -9,4 +9,5 @@
     <string name="reset_confirm_question">Do you really want to reset all your tokens to zero?</string>
     <string name="reset_proceed">Reset to zero</string>
     <string name="reset_cancel">Keep my Tokens</string>
+    <string name="preferences_file">org.bobturf.screentime.PREFERENCES</string>
 </resources>

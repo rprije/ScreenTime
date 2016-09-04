@@ -1,5 +1,8 @@
 package org.bobturf.screentime;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 
 import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
@@ -21,8 +24,12 @@ import java.util.LinkedList;
  * State accessible throughout the app
  */
 class State {
-    private Integer tokensEarned = 0;
+    SharedPreferences preferences;
+
+    private Integer tokensEarned;
     private Constructor problemConstructors[];
+
+    private final String tokensEarnedKey = "TOKENS_EARNED";
 
     @NonNull private LinkedList<Problem> problemQueue = new LinkedList<>();
     private final Integer problemSetValue = 1;
@@ -41,8 +48,20 @@ class State {
 
     }
 
+    void load(Context context) {
+        preferences = context.getSharedPreferences(context.getString(R.string.preferences_file), Context.MODE_PRIVATE);
+        tokensEarned = preferences.getInt(tokensEarnedKey, 0);
+    }
+
+    private void saveTokens() {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(tokensEarnedKey, tokensEarned);
+        editor.commit();
+    }
+
     private void earnTokens (Integer tokens) {
         tokensEarned += tokens;
+        saveTokens ();
     }
 
     Integer getTokensEarned () {

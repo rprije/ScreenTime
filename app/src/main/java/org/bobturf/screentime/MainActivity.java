@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
 
         ScreenTimeApplication app = (ScreenTimeApplication) getApplicationContext();
         state = app.getState();
+        state.load(this);
 
         main_summary = (TextView)findViewById(R.id.main_summary);
 
@@ -66,7 +67,7 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void start(@SuppressWarnings("UnusedParameters") View view) {
         if (state.numProblemsRemaining() <= 0) {
             try {
-                state.generateProblems(30);
+                state.generateProblems(1);
             } catch (AlreadyHaveProblems alreadyHaveProblems) {
                 throw new ShouldBeImpossible();
             }
