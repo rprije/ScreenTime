@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScreenTime.WindowLayout"
+    android:orientation="vertical"
+    tools:context="org.bobturf.screentime.SettingsActivity">
+
+    <Button
+        style="@style/ScreenTime.Button"
+        android:text="@string/change_passcode_button"
+        android:onClick="changePasscode" />
+
+</LinearLayout>

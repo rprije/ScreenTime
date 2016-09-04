@@ -31,11 +31,18 @@
         <item name="android:textSize">?LargeText</item>
     </style>
 
-    <style name="ScreenTime.NumberEntry">
+    <style name="ScreenTime.FillWidth.NumberEntry">
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">match_parent</item>
         <item name="android:maxLength">7</item>
         <item name="android:inputType">number|numberSigned</item>
+    </style>
+
+    <style name="ScreenTime.FillWidth.PassCode">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:maxLength">8</item>
+        <item name="android:inputType">numberPassword</item>
     </style>
 
 </resources>

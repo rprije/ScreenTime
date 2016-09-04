@@ -42,15 +42,10 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     }
 
     @Override
-    protected void onStart() {
-        super.onStart();
-        showTokens();
-    }
-
-    @Override
     protected void onResume() {
         super.onResume();
         showTokens();
+        ensurePasswordSet();
     }
 
     @Override
@@ -64,10 +59,17 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
         main_summary.setText(String.format("You currently have %d tokens", tokens));
     }
 
+    private void ensurePasswordSet() {
+        if (! state.passcodeIsSet()) {
+            Intent intent = new Intent(this, ChangePasscodeActivity.class);
+            startActivity(intent);
+        }
+    }
+
     public void start(@SuppressWarnings("UnusedParameters") View view) {
         if (state.numProblemsRemaining() <= 0) {
             try {
-                state.generateProblems(1);
+                state.generateProblems(30);
             } catch (AlreadyHaveProblems alreadyHaveProblems) {
                 throw new ShouldBeImpossible();
             }
@@ -80,6 +82,11 @@ public class MainActivity extends AppCompatActivity implements DialogInterface.O
     public void reset(@SuppressWarnings("UnusedParameters") View view) {
         ResetDialog dialog = new ResetDialog();
         dialog.show(getSupportFragmentManager(), "reset");
+    }
+
+    public void settings(@SuppressWarnings("UnusedParameters") View view) {
+        Intent intent = new Intent(this, AuthActivity.class);
+        startActivity(intent);
     }
 
 }

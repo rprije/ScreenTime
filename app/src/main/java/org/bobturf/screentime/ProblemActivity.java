@@ -60,7 +60,7 @@ public class ProblemActivity extends AppCompatActivity {
     private void nextProblem() {
         Intent intent = new Intent(this, ProblemActivity.class);
         startActivity(intent);
-        this.finish();
+        finish();
     }
 
     public void checkAnswer(@SuppressWarnings("UnusedParameters") View view) {

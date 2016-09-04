@@ -9,5 +9,14 @@
     <string name="reset_confirm_question">Do you really want to reset all your tokens to zero?</string>
     <string name="reset_proceed">Reset to zero</string>
     <string name="reset_cancel">Keep my Tokens</string>
+    <string name="enter_passcode">Enter Pass Code</string>
+    <string name="passcode_hint">Pass Code</string>
+    <string name="passcode_confirm_hint">Again to Confirm</string>
+    <string name="auth_button">Authenticate</string>
+    <string name="cancel_button">Cancel</string>
+    <string name="change_passcode_button">Change Passcode</string>
+    <string name="change_passcode">Change Passcode</string>
+    <string name="settings_button">Settings</string>
+
     <string name="preferences_file">org.bobturf.screentime.PREFERENCES</string>
 </resources>

@@ -13,7 +13,7 @@
         style="@style/ScreenTime.FillWidth"
         android:id="@+id/problem_frame" />
     <EditText
-        style="@style/ScreenTime.NumberEntry"
+        style="@style/ScreenTime.FillWidth.NumberEntry"
         android:hint="@string/answer_entry_hint"
         android:id="@+id/answer_entry" />
     <LinearLayout

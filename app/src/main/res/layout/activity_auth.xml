@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    style="@style/ScreenTime.WindowLayout"
+    android:orientation="vertical"
+    tools:context="org.bobturf.screentime.AuthActivity">
+
+    <TextView
+        style="@style/ScreenTime.FillWidth"
+        android:text="@string/enter_passcode" />
+
+    <EditText
+        style="@style/ScreenTime.FillWidth.PassCode"
+        android:hint="@string/passcode_hint"
+        android:id="@+id/passcode_entry" />
+
+    <LinearLayout
+        style="@style/ScreenTime.FillWidth"
+        android:orientation="horizontal">
+        <Button
+            style="@style/ScreenTime.Button"
+            android:text="@string/auth_button"
+            android:onClick="checkPasscode" />
+        <Button
+            style="@style/ScreenTime.Button"
+            android:text="@string/cancel_button"
+            android:onClick="cancel" />
+    </LinearLayout>
+
+</LinearLayout>

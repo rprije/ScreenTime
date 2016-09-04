@@ -2,7 +2,6 @@ package org.bobturf.screentime;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.support.annotation.IntegerRes;
 import android.support.annotation.NonNull;
 
 import org.bobturf.screentime.Exception.ProblemsAlreadyComplete;
@@ -29,7 +28,10 @@ class State {
     private Integer tokensEarned;
     private Constructor problemConstructors[];
 
+    private String passcode;
+
     private final String tokensEarnedKey = "TOKENS_EARNED";
+    private final String passcodeKey = "PASSCODE";
 
     @NonNull private LinkedList<Problem> problemQueue = new LinkedList<>();
     private final Integer problemSetValue = 1;
@@ -51,12 +53,23 @@ class State {
     void load(Context context) {
         preferences = context.getSharedPreferences(context.getString(R.string.preferences_file), Context.MODE_PRIVATE);
         tokensEarned = preferences.getInt(tokensEarnedKey, 0);
+        passcode = preferences.getString(passcodeKey, "");
+    }
+
+    private void savePreference (String key, String value) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putString(key, value);
+        editor.commit();
+    }
+
+    private void savePreference (String key, int value) {
+        SharedPreferences.Editor editor = preferences.edit();
+        editor.putInt(key, value);
+        editor.commit();
     }
 
     private void saveTokens() {
-        SharedPreferences.Editor editor = preferences.edit();
-        editor.putInt(tokensEarnedKey, tokensEarned);
-        editor.commit();
+        savePreference(tokensEarnedKey,tokensEarned);
     }
 
     private void earnTokens (Integer tokens) {
@@ -70,6 +83,7 @@ class State {
 
     void reset () {
         tokensEarned = 0;
+        saveTokens();
         problemQueue = new LinkedList<>();
     }
 
@@ -119,6 +133,19 @@ class State {
 
     int numProblemsRemaining () {
         return problemQueue.size();
+    }
+
+    boolean passcodeIsSet () {
+        return (passcode != null && passcode.length() > 0);
+    }
+
+    boolean checkPasscode (String passcodeAttempt) {
+        return (passcode.equals(passcodeAttempt));
+    }
+
+    void changePasscode (String newPassCode) {
+        passcode = newPassCode;
+        savePreference(passcodeKey,passcode);
     }
 
 }
